@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // Styled Components
@@ -87,23 +88,50 @@ const Checkbox = styled.input`
 
 const Dashboard = () => {
   const [feedbackList, setFeedbackList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchFeedback();
-  }, []);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Redirect to login if token doesn't exist
+      navigate("/login");
+    } else {
+      fetchFeedback(token);
+    }
+  }, [navigate]);
 
-  const fetchFeedback = async () => {
+  const fetchFeedback = async (token) => {
     try {
-      const response = await axios.get("https://portfoliobackend-piyush.onrender.com/api/v1/feedback");
+      const response = await axios.get(
+        "https://portfoliobackend-piyush.onrender.com/api/v1/feedback",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setFeedbackList(response.data);
     } catch (error) {
       console.error("Error fetching feedback:", error);
+      if (error.response?.status === 401) {
+        // Token is invalid or expired
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     }
   };
 
   const handleDelete = async (id) => {
+    const token = localStorage.getItem("token");
     try {
-      await axios.delete(`https://portfoliobackend-piyush.onrender.com/api/v1/feedback/${id}`);
+      await axios.delete(
+        `https://portfoliobackend-piyush.onrender.com/api/v1/feedback/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setFeedbackList(feedbackList.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Delete failed:", error);

@@ -83,7 +83,15 @@ const Login = () => {
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/login`,
         formData
       );
-      if (response.data.success) {
+  
+      // Assuming your backend returns { token: '...' }
+      const token = response.data.token;
+  
+      if (token) {
+        // Store token securely (localStorage or cookie)
+        localStorage.setItem('token', token);
+  
+        // Navigate to protected route
         navigate('/dashboard');
       } else {
         alert('Invalid credentials');
@@ -92,6 +100,7 @@ const Login = () => {
       alert('Login failed: ' + (error.response?.data?.message || error.message));
     }
   };
+  
   
 
   return (
