@@ -121,6 +121,232 @@ const StarButton = styled.button`
   }
 `;
 
+// const Feedback = () => {
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     feedback: '',
+//     rating: 0
+//   });
+  
+//   const [errors, setErrors] = useState({});
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+//   const validateForm = () => {
+//     const newErrors = {};
+    
+//     if (!formData.name.trim()) {
+//       newErrors.name = 'Name is required';
+//     }
+    
+//     if (!formData.email.trim()) {
+//       newErrors.email = 'Email is required';
+//     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
+//       newErrors.email = 'Invalid email address';
+//     }
+    
+//     if (!formData.feedback.trim()) {
+//       newErrors.feedback = 'Feedback is required';
+//     }
+    
+//     if (formData.rating === 0) {
+//       newErrors.rating = 'Please provide a rating';
+//     }
+    
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+  
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({
+//       ...prev,
+//       [name]: value
+//     }));
+    
+//     // Clear error when user types
+//     if (errors[name]) {
+//       setErrors(prev => ({
+//         ...prev,
+//         [name]: undefined
+//       }));
+//     }
+//   };
+  
+//   const handleRatingChange = (rating) => {
+//     setFormData(prev => ({
+//       ...prev,
+//       rating
+//     }));
+    
+//     if (errors.rating) {
+//       setErrors(prev => ({
+//         ...prev,
+//         rating: undefined
+//       }));
+//     }
+//   };
+  
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+    
+//     if (!validateForm()) {
+//       return;
+//     }
+    
+//     setIsSubmitting(true);
+    
+//     try {
+//       // This is where you would normally make an API call with axios
+//       // For now, we'll simulate a successful API call
+//       await axios.post(
+//         "http://localhost:5177/api/v1/feedback",
+//         formData
+//       );
+//       console.log("Feedback Data successfully sent to backend!");
+      
+//       console.log('Feedback submitted:', formData);
+      
+//       // Reset form
+//       setFormData({
+//         name: '',
+//         email: '',
+//         feedback: '',
+//         rating: 0
+//       });
+      
+//       setIsSubmitted(true);
+      
+//       // Hide success message after 5 seconds
+//       setTimeout(() => {
+//         setIsSubmitted(false);
+//       }, 5000);
+      
+//     } catch (error) {
+//       console.error('Error submitting feedback:', error);
+//       setErrors(prev => ({
+//         ...prev,
+//         form: 'There was an error submitting your feedback. Please try again.'
+//       }));
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+  
+//   return (
+//     <FeedbackSection>
+//       <FeedbackContainer>
+//         <FeedbackTitle>Leave Your Feedback</FeedbackTitle>
+//         <FeedbackDescription>
+//           Your feedback is valuable to me! Please share your thoughts on my portfolio or your experience working with me.
+//         </FeedbackDescription>
+        
+//         {isSubmitted && (
+//           <SuccessMessage
+//             initial={{ opacity: 0, y: -20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             exit={{ opacity: 0, y: -20 }}
+//           >
+//             Thank you for your feedback! I appreciate your time and insights.
+//           </SuccessMessage>
+//         )}
+        
+//         {errors.form && (
+//           <ErrorMessage>{errors.form}</ErrorMessage>
+//         )}
+        
+//         <form onSubmit={handleSubmit}>
+//           <FormGroup>
+//             <Label htmlFor="name">Full Name *</Label>
+//             <Input
+//               type="text"
+//               id="name"
+//               name="name"
+//               value={formData.name}
+//               onChange={handleChange}
+//               error={errors.name}
+//               placeholder="John Doe"
+//             />
+//             {errors.name && (
+//               <ErrorMessage>
+//                 <FaExclamationCircle /> {errors.name}
+//               </ErrorMessage>
+//             )}
+//           </FormGroup>
+          
+//           <FormGroup>
+//             <Label htmlFor="email">Email Address *</Label>
+//             <Input
+//               type="email"
+//               id="email"
+//               name="email"
+//               value={formData.email}
+//               onChange={handleChange}
+//               error={errors.email}
+//               placeholder="john@example.com"
+//             />
+//             {errors.email && (
+//               <ErrorMessage>
+//                 <FaExclamationCircle /> {errors.email}
+//               </ErrorMessage>
+//             )}
+//           </FormGroup>
+          
+//           <FormGroup>
+//             <Label>Your Rating *</Label>
+//             <RatingContainer>
+//               {[1, 2, 3, 4, 5].map((star) => (
+//                 <StarButton
+//                   key={star}
+//                   type="button"
+//                   active={formData.rating >= star}
+//                   onClick={() => handleRatingChange(star)}
+//                 >
+//                   <FaStar />
+//                 </StarButton>
+//               ))}
+//             </RatingContainer>
+//             {errors.rating && (
+//               <ErrorMessage>
+//                 <FaExclamationCircle /> {errors.rating}
+//               </ErrorMessage>
+//             )}
+//           </FormGroup>
+          
+//           <FormGroup>
+//             <Label htmlFor="feedback">Your Feedback *</Label>
+//             <Textarea
+//               id="feedback"
+//               name="feedback"
+//               value={formData.feedback}
+//               onChange={handleChange}
+//               error={errors.feedback}
+//               placeholder="Please share your thoughts, suggestions, or experiences..."
+//             />
+//             {errors.feedback && (
+//               <ErrorMessage>
+//                 <FaExclamationCircle /> {errors.feedback}
+//               </ErrorMessage>
+//             )}
+//           </FormGroup>
+          
+//           <Button
+//             type="submit"
+//             variant="primary"
+//             size="lg"
+//             fullWidth
+//             disabled={isSubmitting}
+//             icon={<FaPaperPlane />}
+//           >
+//             {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+//           </Button>
+//         </form>
+//       </FeedbackContainer>
+//     </FeedbackSection>
+//   );
+// };
+
 const Feedback = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -198,10 +424,9 @@ const Feedback = () => {
     setIsSubmitting(true);
     
     try {
-      // This is where you would normally make an API call with axios
-      // For now, we'll simulate a successful API call
+      // Update URL to deployed backend
       await axios.post(
-        "http://localhost:5177/api/v1/feedback",
+        "https://portfoliobackend-piyush.onrender.com/api/v1/feedback",
         formData
       );
       console.log("Feedback Data successfully sent to backend!");
@@ -346,5 +571,6 @@ const Feedback = () => {
     </FeedbackSection>
   );
 };
+
 
 export default Feedback;

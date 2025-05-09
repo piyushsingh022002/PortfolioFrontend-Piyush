@@ -205,6 +205,279 @@ const SuccessMessage = styled(motion.div)`
   text-align: center;
 `;
 
+// const Contact = () => {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     subject: "",
+//     message: "",
+//   });
+
+//   const [errors, setErrors] = useState({});
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [isSubmitted, setIsSubmitted] = useState(false);
+
+//   const validateForm = () => {
+//     const newErrors = {};
+
+//     if (!formData.name.trim()) {
+//       newErrors.name = "Name is required";
+//     }
+
+//     if (!formData.email.trim()) {
+//       newErrors.email = "Email is required";
+//     } else if (
+//       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+//     ) {
+//       newErrors.email = "Invalid email address";
+//     }
+
+//     if (!formData.subject.trim()) {
+//       newErrors.subject = "Subject is required";
+//     }
+
+//     if (!formData.message.trim()) {
+//       newErrors.message = "Message is required";
+//     }
+
+//     setErrors(newErrors);
+//     return Object.keys(newErrors).length === 0;
+//   };
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+
+//     // Clear error when user types
+//     if (errors[name]) {
+//       setErrors((prev) => ({
+//         ...prev,
+//         [name]: undefined,
+//       }));
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!validateForm()) {
+//       return;
+//     }
+
+//     setIsSubmitting(true);
+
+//     try {
+//       // This is where you would normally make an API call with axios
+//       // For now, we'll simulate a successful API call
+//       await axios.post(
+//         "http://localhost:5177/api/v1/ContactController",
+//         formData
+//       );
+//       console.log("Contact Data successfully sent to backend!");
+
+//       // Reset form
+//       setFormData({
+//         name: "",
+//         email: "",
+//         subject: "",
+//         message: "",
+//       });
+
+//       setIsSubmitted(true);
+
+//       // Hide success message after 5 seconds
+//       setTimeout(() => {
+//         setIsSubmitted(false);
+//       }, 5000);
+//     } catch (error) {
+//       console.error("Error submitting form:", error);
+//       setErrors((prev) => ({
+//         ...prev,
+//         form: "There was an error sending your message. Please try again.",
+//       }));
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   return (
+//     <ContactSection>
+//       <ContactContainer>
+//         <motion.div
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.6 }}
+//         >
+//           <SectionTitle>Get In Touch</SectionTitle>
+//           <ContactDescription>
+//             Have a question or want to work together? Feel free to contact me
+//             using the form below or through the provided contact information.
+//           </ContactDescription>
+//         </motion.div>
+
+//         <ContactGrid>
+//           <motion.div
+//             initial={{ opacity: 0, x: -20 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             transition={{ duration: 0.6, delay: 0.2 }}
+//           >
+//             <ContactInfo>
+//               <ContactInfoTitle>Contact Information</ContactInfoTitle>
+//               <ContactInfoDescription>
+//                 Feel free to reach out to me anytime. I'm available for
+//                 freelance work, full-time positions, or just to chat about
+//                 potential collaborations.
+//               </ContactInfoDescription>
+
+//               <ContactInfoItem>
+//                 <ContactInfoIcon>
+//                   <FaMapMarkerAlt />
+//                 </ContactInfoIcon>
+//                 <ContactInfoContent>
+//                   <h4>Location</h4>
+//                   <p>San Francisco, CA, United States</p>
+//                 </ContactInfoContent>
+//               </ContactInfoItem>
+
+//               <ContactInfoItem>
+//                 <ContactInfoIcon>
+//                   <FaEnvelope />
+//                 </ContactInfoIcon>
+//                 <ContactInfoContent>
+//                   <h4>Email</h4>
+//                   <p>contact@example.com</p>
+//                 </ContactInfoContent>
+//               </ContactInfoItem>
+
+//               <ContactInfoItem>
+//                 <ContactInfoIcon>
+//                   <FaPhone />
+//                 </ContactInfoIcon>
+//                 <ContactInfoContent>
+//                   <h4>Phone</h4>
+//                   <p>+1 (123) 456-7890</p>
+//                 </ContactInfoContent>
+//               </ContactInfoItem>
+//             </ContactInfo>
+//           </motion.div>
+
+//           <motion.div
+//             initial={{ opacity: 0, x: 20 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             transition={{ duration: 0.6, delay: 0.2 }}
+//           >
+//             <ContactForm>
+//               <FormTitle>Send Me a Message</FormTitle>
+
+//               {isSubmitted && (
+//                 <SuccessMessage
+//                   initial={{ opacity: 0, y: -20 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   exit={{ opacity: 0, y: -20 }}
+//                 >
+//                   Your message has been sent successfully! I'll get back to you
+//                   soon.
+//                 </SuccessMessage>
+//               )}
+
+//               {errors.form && <ErrorMessage>{errors.form}</ErrorMessage>}
+
+//               <form onSubmit={handleSubmit}>
+//                 <FormRow>
+//                   <FormGroup>
+//                     <Label htmlFor="name">Your Name</Label>
+//                     <Input
+//                       type="text"
+//                       id="name"
+//                       name="name"
+//                       value={formData.name}
+//                       onChange={handleChange}
+//                       error={errors.name}
+//                       placeholder="John Doe"
+//                     />
+//                     {errors.name && (
+//                       <ErrorMessage>
+//                         <FaExclamationCircle /> {errors.name}
+//                       </ErrorMessage>
+//                     )}
+//                   </FormGroup>
+
+//                   <FormGroup>
+//                     <Label htmlFor="email">Your Email</Label>
+//                     <Input
+//                       type="email"
+//                       id="email"
+//                       name="email"
+//                       value={formData.email}
+//                       onChange={handleChange}
+//                       error={errors.email}
+//                       placeholder="john@example.com"
+//                     />
+//                     {errors.email && (
+//                       <ErrorMessage>
+//                         <FaExclamationCircle /> {errors.email}
+//                       </ErrorMessage>
+//                     )}
+//                   </FormGroup>
+//                 </FormRow>
+
+//                 <FormGroup>
+//                   <Label htmlFor="subject">Subject</Label>
+//                   <Input
+//                     type="text"
+//                     id="subject"
+//                     name="subject"
+//                     value={formData.subject}
+//                     onChange={handleChange}
+//                     error={errors.subject}
+//                     placeholder="Project Inquiry"
+//                   />
+//                   {errors.subject && (
+//                     <ErrorMessage>
+//                       <FaExclamationCircle /> {errors.subject}
+//                     </ErrorMessage>
+//                   )}
+//                 </FormGroup>
+
+//                 <FormGroup>
+//                   <Label htmlFor="message">Your Message</Label>
+//                   <Textarea
+//                     id="message"
+//                     name="message"
+//                     value={formData.message}
+//                     onChange={handleChange}
+//                     error={errors.message}
+//                     placeholder="Hello, I'm interested in working with you on a project..."
+//                   />
+//                   {errors.message && (
+//                     <ErrorMessage>
+//                       <FaExclamationCircle /> {errors.message}
+//                     </ErrorMessage>
+//                   )}
+//                 </FormGroup>
+
+//                 <Button
+//                   type="submit"
+//                   variant="primary"
+//                   size="lg"
+//                   fullWidth
+//                   disabled={isSubmitting}
+//                   icon={<FaPaperPlane />}
+//                 >
+//                   {isSubmitting ? "Sending..." : "Send Message"}
+//                 </Button>
+//               </form>
+//             </ContactForm>
+//           </motion.div>
+//         </ContactGrid>
+//       </ContactContainer>
+//     </ContactSection>
+//   );
+// };
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -270,10 +543,9 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // This is where you would normally make an API call with axios
-      // For now, we'll simulate a successful API call
+      // Update the URL to the deployed backend
       await axios.post(
-        "http://localhost:5177/api/v1/ContactController",
+        "https://portfoliobackend-piyush.onrender.com/api/v1/contact",
         formData
       );
       console.log("Contact Data successfully sent to backend!");
@@ -477,5 +749,6 @@ const Contact = () => {
     </ContactSection>
   );
 };
+
 
 export default Contact;

@@ -94,7 +94,7 @@ const Dashboard = () => {
 
   const fetchFeedback = async () => {
     try {
-      const response = await axios.get("http://localhost:5177/api/v1/feedback");
+      const response = await axios.get("https://portfoliobackend-piyush.onrender.com/api/v1/feedback");
       setFeedbackList(response.data);
     } catch (error) {
       console.error("Error fetching feedback:", error);
@@ -103,7 +103,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5177/api/v1/feedback/${id}`);
+      await axios.delete(`https://portfoliobackend-piyush.onrender.com/api/v1/feedback/${id}`);
       setFeedbackList(feedbackList.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Delete failed:", error);
@@ -152,5 +152,6 @@ const Dashboard = () => {
     </Container>
   );
 };
+
 
 export default Dashboard;
