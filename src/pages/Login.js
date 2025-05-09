@@ -80,7 +80,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/login`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/login`,
         formData
       );
       if (response.data.success) {
