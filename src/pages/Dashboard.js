@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { jwtDecode } from 'jwt-decode'; // Named import
+ 
 
 // Styled Components
 const Container = styled.div`
@@ -88,22 +90,38 @@ const Checkbox = styled.input`
 
 const Dashboard = () => {
   const [feedbackList, setFeedbackList] = useState([]);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
-      // Redirect to login if token doesn't exist
-      navigate("/login");
+      // Redirect to login if no token exists
+      navigate('/login');
     } else {
-      fetchFeedback(token);
+      try {
+        const decodedToken = jwtDecode(token); // Use jwtDecode instead of jwt_decode
+        const currentTime = Date.now() / 1000; // Current time in seconds
+
+        if (decodedToken.exp < currentTime) {
+          // Token is expired
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          fetchFeedback(token); // Fetch feedback if token is valid
+        }
+      } catch (error) {
+        console.error('Token decoding error:', error);
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
     }
   }, [navigate]);
 
   const fetchFeedback = async (token) => {
     try {
       const response = await axios.get(
-        "https://portfoliobackend-piyush.onrender.com/api/v1/feedback",
+        'https://portfoliobackend-piyush.onrender.com/api/v1/feedback',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -112,17 +130,19 @@ const Dashboard = () => {
       );
       setFeedbackList(response.data);
     } catch (error) {
-      console.error("Error fetching feedback:", error);
+      console.error('Error fetching feedback:', error);
       if (error.response?.status === 401) {
         // Token is invalid or expired
-        localStorage.removeItem("token");
-        navigate("/login");
+        localStorage.removeItem('token');
+        navigate('/login');
+      } else {
+        setError('Failed to load feedback. Please try again later.');
       }
     }
   };
 
   const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(
         `https://portfoliobackend-piyush.onrender.com/api/v1/feedback/${id}`,
@@ -134,7 +154,8 @@ const Dashboard = () => {
       );
       setFeedbackList(feedbackList.filter((item) => item.id !== id));
     } catch (error) {
-      console.error("Delete failed:", error);
+      console.error('Delete failed:', error);
+      setError('Failed to delete feedback. Please try again later.');
     }
   };
 
@@ -150,8 +171,11 @@ const Dashboard = () => {
     <Container>
       <Card>
         <Heading>Dashboard</Heading>
+
+        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+
         {feedbackList.length === 0 ? (
-          <p style={{ textAlign: "center", color: "#555" }}>
+          <p style={{ textAlign: 'center', color: '#555' }}>
             No feedback available.
           </p>
         ) : (
@@ -180,6 +204,5 @@ const Dashboard = () => {
     </Container>
   );
 };
-
 
 export default Dashboard;

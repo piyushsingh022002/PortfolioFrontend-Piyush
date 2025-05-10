@@ -63,21 +63,28 @@ const SubmitButton = styled.button`
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
-    password: ""
+    username: '',
+    password: ''
   });
+
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMsg('');
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/api/v1/login`,
@@ -85,54 +92,62 @@ const Login = () => {
         {
           headers: {
             'Content-Type': 'application/json'
-          }}
+          }
+        }
       );
-  
-      // Assuming your backend returns { token: '...' }
+
       const token = response.data.token;
-  
+
       if (token) {
-        // Store token securely (localStorage or cookie)
         localStorage.setItem('token', token);
-  
-        // Navigate to protected route
         navigate('/dashboard');
       } else {
-        alert('Invalid credentials');
+        setErrorMsg('Invalid credentials');
       }
     } catch (error) {
-      alert('Login failed: ' + (error.response?.data?.message || error.message));
+      const message = error.response?.data?.message || 'Login failed. Please try again.';
+      setErrorMsg(message);
+    } finally {
+      setLoading(false);
     }
   };
-  
-  
 
   return (
     <LoginWrapper>
       <LoginBox>
         <Heading>Login</Heading>
+
         <form onSubmit={handleLogin}>
-          <Input 
-            type="text" 
+          <Input
+            type="text"
             name="username"
-            placeholder="Username" 
+            placeholder="Username"
             value={formData.username}
             onChange={handleChange}
-            required 
+            required
           />
-          <Input 
-            type="password" 
+
+          <Input
+            type="password"
             name="password"
-            placeholder="Password" 
+            placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            required 
+            required
           />
-          <SubmitButton type="submit">Login</SubmitButton>
+
+          <SubmitButton type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </SubmitButton>
         </form>
+
+        {errorMsg && <p style={{ color: 'red', marginTop: '10px' }}>{errorMsg}</p>}
       </LoginBox>
     </LoginWrapper>
   );
 };
 
 export default Login;
+
+
+
