@@ -426,7 +426,7 @@ const Feedback = () => {
     try {
       // Update URL to deployed backend
       await axios.post(
-        "https://portfoliobackend-piyush.onrender.com/api/v1/feedback",
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/feedback`,
         formData
       );
       console.log("Feedback Data successfully sent to backend!");

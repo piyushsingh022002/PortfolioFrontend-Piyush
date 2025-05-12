@@ -545,7 +545,7 @@ const Contact = () => {
     try {
       // Update the URL to the deployed backend
       await axios.post(
-        "https://portfoliobackend-piyush.onrender.com/api/v1/contact",
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/contact`,
         formData
       );
       console.log("Contact Data successfully sent to backend!");

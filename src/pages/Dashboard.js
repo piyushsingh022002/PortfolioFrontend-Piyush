@@ -121,7 +121,7 @@ const Dashboard = () => {
   const fetchFeedback = async (token) => {
     try {
       const response = await axios.get(
-        'https://portfoliobackend-piyush.onrender.com/api/v1/feedback',
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/feedback`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

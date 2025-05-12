@@ -404,7 +404,7 @@ const Query = () => {
     
     try {
       // Replace the URL with your deployed backend API
-      await axios.post('https://portfoliobackend-piyush.onrender.com/api/v1/query', formData);
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/query`, formData);
       console.log('Query data successfully sent to backend!');
 
       // Reset form
