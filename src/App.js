@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 
 // Theme and Global Styles
-import theme from './styles/theme';
+import { ThemeProvider } from './context/ThemeContext';
 import GlobalStyles from './styles/GlobalStyles';
 
 // Layout
@@ -20,9 +19,14 @@ import Feedback from './pages/Feedback';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
+// Skill Pages
+import WebDevelopment from './pages/skills/WebDevelopment';
+import FrontendDevelopment from './pages/skills/FrontendDevelopment';
+import ResponsiveDesign from './pages/skills/ResponsiveDesign';
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <GlobalStyles />
       <Router>
         <AnimatePresence mode="wait">
@@ -35,9 +39,12 @@ function App() {
               <Route path="/query" element={<Query />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/login" element={<Login />} />
-
               <Route path="/dashboard" element={<Dashboard />} />
-
+              
+              {/* Skill Routes */}
+              <Route path="/skills/web-development" element={<WebDevelopment />} />
+              <Route path="/skills/frontend-development" element={<FrontendDevelopment />} />
+              <Route path="/skills/responsive-design" element={<ResponsiveDesign />} />
             </Routes>
           </Layout>
         </AnimatePresence>

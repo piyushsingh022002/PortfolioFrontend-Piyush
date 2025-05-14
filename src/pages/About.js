@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaCode, FaServer, FaMobileAlt, FaDatabase, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { 
+  FaCode, FaServer, FaMobileAlt, FaDatabase, FaGithub, FaLinkedin,
+  FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJs, FaAngular, FaVuejs, FaPython, FaJava, FaDocker
+} from 'react-icons/fa';
+import { 
+  SiTypescript, SiMongodb, SiPostgresql, SiRedux, SiGraphql, SiNextdotjs, SiExpress, SiDotnet, SiAzuredevops
+} from 'react-icons/si';
 import Button from '../components/ui/Button';
-import myDeveloper from '../assets/images/developer.webp';
 
 const AboutSection = styled.section`
   padding: ${props => props.theme.spacing['3xl']} 0;
@@ -35,25 +40,45 @@ const SectionTitle = styled.h1`
 
 const AboutContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 3rem;
   margin-bottom: 4rem;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-  }
 `;
 
-const AboutImage = styled.div`
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: ${props => props.theme.borderRadius.lg};
-    box-shadow: ${props => props.theme.shadows.lg};
+const TechIconsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0 3rem;
+`;
+
+const TechIcon = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  svg {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: ${props => props.theme.colors.primary};
   }
   
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    order: -1;
+  p {
+    font-size: ${props => props.theme.fontSizes.sm};
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  a {
+    color: ${props => props.theme.colors.text};
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: ${props => props.theme.colors.accent};
+    }
   }
 `;
 
@@ -239,33 +264,157 @@ const About = () => {
                 }
               }}
             >
-              <motion.p variants={fadeInUp}>
-                Hello! I'm a passionate Full Stack Developer with over 5 years of experience in building web applications. I specialize in creating responsive, user-friendly interfaces and robust backend systems that deliver exceptional user experiences.
-              </motion.p>
-              
-              <motion.p variants={fadeInUp}>
-                My journey in web development began during my university years, where I discovered my passion for coding. Since then, I've worked with various technologies and frameworks, constantly expanding my knowledge and skills to stay at the forefront of this ever-evolving field.
-              </motion.p>
-              
-              <motion.p variants={fadeInUp}>
-                I believe in writing clean, maintainable code and following best practices. My approach to development is focused on creating solutions that not only meet the current requirements but are also scalable and adaptable to future needs.
-              </motion.p>
-              
-              <motion.p variants={fadeInUp}>
-                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through blog posts and community forums. I'm also an avid hiker and enjoy spending time outdoors, which helps me maintain a healthy work-life balance.
-              </motion.p>
+              <p>
+                Hello! I'm Piyush, a passionate full-stack developer with a knack for creating elegant solutions to complex problems. With a strong foundation in both frontend and backend technologies, I bring ideas to life through clean, efficient code.
+              </p>
+              <p>
+                My journey in software development began during my university years, where I discovered my passion for building web applications. Since then, I've been constantly learning and improving my skills to stay at the forefront of technology trends.
+              </p>
+              <p>
+                I specialize in JavaScript-based technologies, including React, Node.js, and modern frameworks. I'm also experienced with database design, API development, and cloud deployment solutions.
+              </p>
+              <p>
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through blog posts and mentoring.
+              </p>
             </motion.div>
           </AboutText>
           
-          <AboutImage>
-            <motion.img 
-              src={myDeveloper} 
-              alt="Developer working"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            />
-          </AboutImage>
+          <TechIconsContainer>
+            {/* Frontend Technologies */}
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">
+                <FaReact />
+                <p>React</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">
+                <FaJs />
+                <p>JavaScript</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">
+                <SiTypescript />
+                <p>TypeScript</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">
+                <FaHtml5 />
+                <p>HTML5</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noopener noreferrer">
+                <FaCss3Alt />
+                <p>CSS3</p>
+              </a>
+            </TechIcon>
+            
+            {/* Backend Technologies */}
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">
+                <FaNodeJs />
+                <p>Node.js</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              <a href="https://expressjs.com/" target="_blank" rel="noopener noreferrer">
+                <SiExpress />
+                <p>Express</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <a href="https://dotnet.microsoft.com/" target="_blank" rel="noopener noreferrer">
+                <SiDotnet />
+                <p>.NET</p>
+              </a>
+            </TechIcon>
+            
+            {/* Database & Other */}
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+            >
+              <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer">
+                <SiMongodb />
+                <p>MongoDB</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+            >
+              <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">
+                <SiPostgresql />
+                <p>PostgreSQL</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.1 }}
+            >
+              <a href="https://graphql.org/" target="_blank" rel="noopener noreferrer">
+                <SiGraphql />
+                <p>GraphQL</p>
+              </a>
+            </TechIcon>
+            
+            <TechIcon
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+            >
+              <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">
+                <FaDocker />
+                <p>Docker</p>
+              </a>
+            </TechIcon>
+          </TechIconsContainer>
         </AboutContent>
         
         <StatsContainer>
@@ -453,7 +602,7 @@ const About = () => {
                 GitHub
               </Button>
               <Button 
-                href="www.linkedin.com/in/piyushsingh02" 
+                href="https://www.linkedin.com/in/piyushsingh02" 
                 variant="secondary"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaLock } from 'react-icons/fa';
 import Button from '../ui/Button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FooterContainer = styled.footer`
   background-color: ${props => props.theme.colors.darkBackground};
@@ -100,8 +101,53 @@ const Copyright = styled.div`
   font-size: ${props => props.theme.fontSizes.sm};
 `;
 
+// Login popup components (same as in Header.js)
+const LoginPopup = styled(motion.div)`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: ${props => props.theme.colors.background};
+  border-radius: ${props => props.theme.borderRadius.md};
+  padding: ${props => props.theme.spacing.xl};
+  box-shadow: ${props => props.theme.shadows.lg};
+  z-index: 1000;
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+`;
+
+const PopupOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+// Login button with not-allowed cursor
+const LoginButton = styled(Button)`
+  cursor: not-allowed;
+  
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+`;
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  
+  const handleLoginClick = () => {
+    setShowLoginPopup(true);
+  };
+  
+  const closeLoginPopup = () => {
+    setShowLoginPopup(false);
+  };
   
   return (
     <FooterContainer>
@@ -158,20 +204,51 @@ const Footer = () => {
           >
             Leave Feedback
           </Button>
-          <Button 
-  to="/login" 
-  variant="accent" 
-  size="sm"
-  style={{ marginTop: '1rem' }}
->
-  Login
-</Button>
+          <LoginButton 
+            variant="accent" 
+            size="sm"
+            style={{ marginTop: '1rem' }}
+            onClick={handleLoginClick}
+          >
+            <FaLock size={12} style={{ marginRight: '5px' }} />
+            Login
+          </LoginButton>
         </FooterColumn>
       </FooterContent>
       
       <Copyright>
         <p>© {currentYear} Portfolio. All rights reserved.</p>
       </Copyright>
+      
+      <AnimatePresence>
+        {showLoginPopup && (
+          <>
+            <PopupOverlay 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeLoginPopup}
+            />
+            <LoginPopup
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            >
+              <h3>Admin Access Only</h3>
+              <p>The login section is restricted to administrators only.</p>
+              <Button 
+                variant="accent" 
+                size="sm"
+                onClick={closeLoginPopup}
+                style={{ marginTop: '1rem' }}
+              >
+                Close
+              </Button>
+            </LoginPopup>
+          </>
+        )}
+      </AnimatePresence>
     </FooterContainer>
   );
 };

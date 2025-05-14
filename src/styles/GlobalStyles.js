@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import theme from './theme';
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Roboto+Mono&display=swap');
@@ -15,64 +14,70 @@ const GlobalStyles = createGlobalStyle`
   }
   
   body {
-    font-family: ${theme.fonts.main};
-    background-color: ${theme.colors.background};
-    color: ${theme.colors.text};
+    font-family: ${props => props.theme.fonts.main};
+    background-color: ${props => props.theme.colors.background};
+    color: ${props => props.theme.colors.text};
     line-height: 1.7;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: ${theme.fonts.heading};
+    font-family: ${props => props.theme.fonts.heading};
     font-weight: 600;
-    margin-bottom: ${theme.spacing.md};
+    margin-bottom: ${props => props.theme.spacing.md};
     line-height: 1.3;
+    color: ${props => props.theme.colors.text};
+    transition: color 0.3s ease;
   }
   
   h1 {
-    font-size: ${theme.fontSizes['5xl']};
+    font-size: ${props => props.theme.fontSizes['5xl']};
     
-    @media (max-width: ${theme.breakpoints.md}) {
-      font-size: ${theme.fontSizes['4xl']};
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: ${props => props.theme.fontSizes['4xl']};
     }
   }
   
   h2 {
-    font-size: ${theme.fontSizes['3xl']};
+    font-size: ${props => props.theme.fontSizes['3xl']};
     
-    @media (max-width: ${theme.breakpoints.md}) {
-      font-size: ${theme.fontSizes['2xl']};
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: ${props => props.theme.fontSizes['2xl']};
     }
   }
   
   h3 {
-    font-size: ${theme.fontSizes['2xl']};
+    font-size: ${props => props.theme.fontSizes['2xl']};
   }
   
   p {
-    margin-bottom: ${theme.spacing.md};
+    margin-bottom: ${props => props.theme.spacing.md};
+    transition: color 0.3s ease;
   }
   
   a {
-    color: ${theme.colors.primary};
+    color: ${props => props.theme.colors.primary};
     text-decoration: none;
-    transition: color ${theme.transitions.fast};
+    transition: color 0.3s ease, transform 0.3s ease;
     
     &:hover {
-      color: ${theme.colors.accent};
+      color: ${props => props.theme.colors.accent};
+      transform: translateY(-2px);
     }
   }
   
   button {
-    font-family: ${theme.fonts.main};
+    font-family: ${props => props.theme.fonts.main};
     cursor: pointer;
     border: none;
     outline: none;
+    transition: all 0.3s ease;
   }
   
   ul, ol {
     list-style-position: inside;
-    margin-bottom: ${theme.spacing.md};
+    margin-bottom: ${props => props.theme.spacing.md};
   }
   
   img {
@@ -81,10 +86,11 @@ const GlobalStyles = createGlobalStyle`
   }
   
   section {
-    padding: ${theme.spacing['3xl']} 0;
+    padding: ${props => props.theme.spacing['3xl']} 0;
+    transition: background-color 0.3s ease;
     
-    @media (max-width: ${theme.breakpoints.md}) {
-      padding: ${theme.spacing['2xl']} 0;
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      padding: ${props => props.theme.spacing['2xl']} 0;
     }
   }
   
@@ -92,13 +98,13 @@ const GlobalStyles = createGlobalStyle`
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 ${theme.spacing.md};
+    padding: 0 ${props => props.theme.spacing.md};
   }
   
   .section-title {
     position: relative;
     display: inline-block;
-    margin-bottom: ${theme.spacing['2xl']};
+    margin-bottom: ${props => props.theme.spacing['2xl']};
     
     &:after {
       content: '';
@@ -107,7 +113,8 @@ const GlobalStyles = createGlobalStyle`
       left: 0;
       width: 50px;
       height: 3px;
-      background-color: ${theme.colors.accent};
+      background-color: ${props => props.theme.colors.accent};
+      transition: background-color 0.3s ease;
     }
   }
   
@@ -153,6 +160,51 @@ const GlobalStyles = createGlobalStyle`
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+  
+  /* Glass effect for cards and surfaces */
+  .glass {
+    background: ${props => props.theme.glassEffect.background};
+    backdrop-filter: ${props => props.theme.glassEffect.backdropFilter};
+    border: ${props => props.theme.glassEffect.border};
+    border-radius: ${props => props.theme.borderRadius.md};
+    box-shadow: ${props => props.theme.shadows.glass};
+    transition: all 0.3s ease;
+  }
+  
+  /* Page transitions */
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 

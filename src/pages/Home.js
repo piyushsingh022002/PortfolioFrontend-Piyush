@@ -1,12 +1,12 @@
-import React from 'react';
-import  { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FaArrowRight, FaCode, FaLaptop, FaMobile } from 'react-icons/fa';
 import Button from '../components/ui/Button';
 import yourImage from '../assets/images/Screenshot.png';
 import personIcon from '../assets/images/images.png';
-import  { keyframes } from 'styled-components';
+import { keyframes } from 'styled-components';
 
 // Hero Section
 const HeroSection = styled.section`
@@ -72,38 +72,32 @@ const HeroImage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 584px; /* Adjust the size of the circular container */
-  height: 600px; /* Adjust the size of the circular container */
+  width: 450px; /* Adjust the size of the circular container */
+  height: 450px; /* Adjust the size of the circular container */
   border-radius: 50%;
-  border: 5px solid white; /* White border around the circular container */
+  border: 5px solid ${props => props.theme.colors.primary}; /* Themed border */
+  box-shadow: ${props => props.theme.shadows.lg};
   overflow: hidden; /* Ensure the image fits nicely inside the circle */
   position: relative; /* Stack images on top of each other */
-  transition: all 1s ease-in-out;
-  cursor: pointer; /* Make it interactive if you want */
+  transition: all 0.5s ease-in-out;
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    width: 300px;
+    height: 300px;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 250px;
+    height: 250px;
+  }
 
-  /* Initially, both images will be stacked */
+  /* Image styling */
   img {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 3s ease-in-out; /* Smooth transition */
-  }
-
-  /* Image visibility */
-  .person-icon {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  .original-image {
-    opacity: 0;
-    z-index: 0;
-  }
-
-  /* Add flip effect on hover */
-  &:hover {
-    transform: rotateY(180deg); /* Flip on hover */
+    transition: opacity 1s ease-in-out; /* Smooth transition */
   }
 `;
 const typeWriter = keyframes`
@@ -247,12 +241,15 @@ const ServicesGrid = styled.div`
 `;
 
 const ServiceCard = styled(motion.div)`
-  background-color: white;
+  background: ${props => props.theme.glassEffect.background};
+  backdrop-filter: ${props => props.theme.glassEffect.backdropFilter};
+  border: ${props => props.theme.glassEffect.border};
   border-radius: ${props => props.theme.borderRadius.lg};
   padding: 2.5rem 2rem;
-  box-shadow: ${props => props.theme.shadows.md};
-  transition: transform ${props => props.theme.transitions.normal}, box-shadow ${props => props.theme.transitions.normal};
+  box-shadow: ${props => props.theme.shadows.glass};
+  transition: all ${props => props.theme.transitions.normal};
   text-align: left;
+  cursor: pointer;
   
   &:hover {
     transform: translateY(-10px);
@@ -346,15 +343,24 @@ const staggerContainer = {
 };
 
 const Home = () => {
-  const [showOriginal, setShowOriginal] = useState(false);
+  const [imageState, setImageState] = useState({
+    personIconOpacity: 1,
+    originalImageOpacity: 0
+  });
+  
+  // Hero image transition effect
   useEffect(() => {
+    // Show placeholder for 3 seconds, then fade to actual image
     const timer = setTimeout(() => {
-      setShowOriginal(true); 
+      setImageState({
+        personIconOpacity: 0,
+        originalImageOpacity: 1
+      });
     }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
- 
+
   return (
     <>
       <HeroSection>
@@ -399,22 +405,22 @@ const Home = () => {
           <HeroImage>
       {/* Person Icon initially */}
       <motion.img
-        className={`person-icon ${!showOriginal ? 'person-icon' : 'original-image'}`}
-        src={personIcon} // Replace with your person icon path
+        src={personIcon}
         alt="Person Icon"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: imageState.personIconOpacity }}
+        transition={{ duration: 1 }}
+        style={{ opacity: imageState.personIconOpacity }}
       />
       
       {/* Original Image */}
       <motion.img
-        className={`original-image ${showOriginal ? 'original-image' : 'person-icon'}`}
-        src={yourImage} // Replace with your original image path
-        alt="Original Image"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
+        src={yourImage}
+        alt="Piyush Singh"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: imageState.originalImageOpacity }}
+        transition={{ duration: 1 }}
+        style={{ opacity: imageState.originalImageOpacity }}
       />
     </HeroImage>
         </HeroContent>
@@ -481,10 +487,14 @@ const Home = () => {
           
           <ServicesGrid>
             <ServiceCard
+              as={Link}
+              to="/skills/web-development"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
             >
               <ServiceIcon>
                 <FaCode />
@@ -494,7 +504,7 @@ const Home = () => {
                 I build modern, responsive websites and web applications using the latest technologies and best practices.
               </ServiceDescription>
               <Button 
-                to="/services" 
+                as="div" 
                 variant="text"
                 icon={<FaArrowRight />}
                 iconPosition="right"
@@ -504,10 +514,14 @@ const Home = () => {
             </ServiceCard>
             
             <ServiceCard
+              as={Link}
+              to="/skills/frontend-development"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
             >
               <ServiceIcon>
                 <FaLaptop />
@@ -517,7 +531,7 @@ const Home = () => {
                 I create intuitive user interfaces with modern frameworks like React, ensuring a seamless user experience.
               </ServiceDescription>
               <Button 
-                to="/services" 
+                as="div" 
                 variant="text"
                 icon={<FaArrowRight />}
                 iconPosition="right"
@@ -527,10 +541,14 @@ const Home = () => {
             </ServiceCard>
             
             <ServiceCard
+              as={Link}
+              to="/skills/responsive-design"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
             >
               <ServiceIcon>
                 <FaMobile />
@@ -540,7 +558,7 @@ const Home = () => {
                 I ensure your website looks and functions perfectly on all devices, from desktops to smartphones.
               </ServiceDescription>
               <Button 
-                to="/services" 
+                as="div" 
                 variant="text"
                 icon={<FaArrowRight />}
                 iconPosition="right"
