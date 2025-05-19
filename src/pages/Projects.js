@@ -245,6 +245,76 @@ const projectsData = [
     github: 'https://github.com',
     demo: 'https://demo.com'
   },
+  {
+    id: 7,
+    title: 'My First Portfolio',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'fullstack',
+    github: 'https://github.com/piyushsingh022002/PortfolioFrontend-Piyush',
+    demo: 'https://portfolio-frontend-piyush.vercel.app/'
+  },
+  {
+    id: 8,
+    title: 'React Quiz App',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'frontend',
+    github: 'https://github.com/piyushsingh022002/QuizAppReactJs',
+    demo: 'https://quiz-app-react-js-git-main-piyush-singhs-projects-86275ccb.vercel.app/'
+  },
+  {
+    id: 9,
+    title: 'Intern Management API',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'fullstack',
+    github: 'https://github.com/piyushsingh022002/InternManagementTS',
+    demo: 'https://intern-management-ts-git-main-piyush-singhs-projects-86275ccb.vercel.app/'
+  },
+  {
+    id: 10,
+    title: 'Text Utils',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'frontend',
+    github: 'https://github.com/piyushsingh022002/TextUtils-Piyush',
+    demo: 'https://text-utils-piyush.vercel.app/'
+  },
+  {
+    id: 11,
+    title: 'Modern Form Validator',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'fullstack',
+    github: 'https://github.com/piyushsingh022002/InputFormValidator-Piyush',
+    demo: 'https://input-form-validator-piyush.vercel.app/'
+  },
+  {
+    id: 12,
+    title: 'Text to Speech Converter',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'frontend',
+    github: 'https://github.com/piyushsingh022002/TextToSpeect-FrontendPiyushSingh',
+    demo: 'https://text-to-speect-frontend-piyush-singh.vercel.app/'
+  },
+  {
+    id: 13,
+    title: 'Portfolio Generator',
+    description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
+    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
+    category: 'frontend',
+    github: 'https://github.com/piyushsingh022002/PortfolioGenerator-PiyushSingh',
+    demo: 'https://portfolio-generator-piyush-singh.vercel.app/'
+  },
 ];
 
 const Projects = () => {
