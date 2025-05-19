@@ -309,7 +309,7 @@ const projectsData = [
     id: 13,
     title: 'Portfolio Generator',
     description: 'A platform for browsing, searching, and listing properties with map integration and filtering options.',
-    image: 'https://cdn.pixabay.com/photo/2016/11/18/17/46/house-1836070_1280.jpg',
+    image: 'https://pixabay.com/illustrations/career-resume-hiring-job-interview-3449422/',
     tags: ['React', 'Node.js', 'MongoDB', 'Google Maps API'],
     category: 'frontend',
     github: 'https://github.com/piyushsingh022002/PortfolioGenerator-PiyushSingh',
