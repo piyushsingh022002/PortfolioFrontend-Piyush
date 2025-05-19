@@ -200,10 +200,10 @@ const projectsData = [
     title: 'Task Management App',
     description: 'A productivity app for managing tasks, projects, and team collaboration with real-time updates.',
     image: 'https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_1280.jpg',
-    tags: ['React', 'Firebase', 'Material UI', 'Redux'],
+    tags: ['React','TypeScript','Styled Component'],
     category: 'frontend',
-    github: 'https://github.com',
-    demo: 'https://demo.com'
+    github: 'https://github.com/piyushsingh022002/TasksManagement-frontend',
+    demo: 'https://tasks-management-frontend.vercel.app/'
   },
   {
     id: 3,
